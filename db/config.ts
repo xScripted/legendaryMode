@@ -1,17 +1,31 @@
 import { defineDb, defineTable, column } from 'astro:db'
 
-const Lead = defineTable({
+const Tasks = defineTable({
   columns: {
-    name: column.text({ unique: true, required: true }),
-    email: column.text({ unique: true, required: true }),
-    phone: column.text({ unique: true, required: true }),
-    message: column.text(),
+    name: column.text(),
+    title: column.text(),
+    done: column.text(),
+    date: column.text(),
+  },
+})
+
+const Entertainment = defineTable({
+  columns: {
+    name: column.text(),
+    img: column.text(),
+    title: column.text(),
+    desc: column.text(),
+    duration: column.text(),
+    link: column.text(),
+    laia: column.boolean(),
+    miquel: column.boolean(),
   },
 })
 
 // https://astro.build/db/config
 export default defineDb({
   tables: {
-    Lead,
+    Tasks,
+    Entertainment,
   },
 })

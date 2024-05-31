@@ -49,6 +49,7 @@
     .slides {
       display: flex;
       transition: 0.3s ease;
+      gap: 30px;
     }
   }
 

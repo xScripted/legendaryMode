@@ -1,11 +1,55 @@
 ---
+import SliderX from '@/components/generic-ui/SliderX.svelte'
+import Card from '@/components/generic-ui/cards/Card.svelte'
 import Layout from '@/layouts/Layout.astro'
-
-Layout
 ---
 
-<Layout title="example">
-  <script>
-    window.location.href = '/private/storyboard'
-  </script>
+<style lang="scss"></style>
+
+<Layout title="Legendary Mode">
+  <p>
+    1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
+    visualizados (uno para laia y uno para miquel)
+  </p>
+
+  <p>To do list semanal, To do list diario, Uno para miquel y otro para Laia</p>
+
+  <SliderX itemWidth={700}>
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+    <Card
+      title="Example title"
+      description="Example description"
+      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+      href="https://www.youtube.com/@TheWildProject"
+    />
+  </SliderX>
 </Layout>
