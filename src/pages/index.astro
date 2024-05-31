@@ -1,4 +1,5 @@
 ---
+import Clock from '@/components/Clock.svelte'
 import SliderX from '@/components/generic-ui/SliderX.svelte'
 import Card from '@/components/generic-ui/cards/Card.svelte'
 import Layout from '@/layouts/Layout.astro'
@@ -7,7 +8,9 @@ import Layout from '@/layouts/Layout.astro'
 <style lang="scss"></style>
 
 <Layout title="Legendary Mode">
-  <p>
+  <Clock client:load />
+
+  <!-- <p>
     1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
     visualizados (uno para laia y uno para miquel)
   </p>
@@ -51,5 +54,5 @@ import Layout from '@/layouts/Layout.astro'
       image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
       href="https://www.youtube.com/@TheWildProject"
     />
-  </SliderX>
+  </SliderX>-->
 </Layout>
