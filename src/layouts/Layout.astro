@@ -1,7 +1,4 @@
 ---
-import Menu from '@/components/essentials/menus/Menu.svelte'
-import Footer from '@/components/essentials/footers/Footer.svelte'
-
 export interface Props {
   title: string
 }
@@ -26,8 +23,6 @@ const title = props.title
     <title>{title}</title>
   </head>
   <body class="dark-mode">
-    <Menu client:load />
-
     <slot />
 
     <style lang="scss" is:global>
