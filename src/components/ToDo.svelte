@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Svg from '@/components/Svg.svelte'
   export let tasks
 
   const months: string[] = [
@@ -23,7 +24,15 @@
 
   let date = day + ' ' + month + ' ' + year
 
-  console.log(day, month, year)
+  let name: string = 'Laia'
+  let ownerTasks = tasks.filter((task) => task.name === name)
+
+  const ownerChange = () => {
+    name = name === 'Miquel' ? 'Laia' : 'Miquel'
+    let owner = tasks.filter((task) => task.name === name)
+
+    ownerTasks = owner
+  }
 </script>
 
 <style lang="scss">
@@ -41,9 +50,51 @@
     padding: 20px 25px;
 
     .header {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      .date {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .arrow {
+          height: 30px;
+          width: 30px;
+          border: 1px solid var(--colorBase);
+          border-radius: 100%;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: 0.3s ease;
+
+          &:hover {
+            transition: 0.3s ease;
+            border: 1px solid var(--colorText3);
+          }
+        }
+      }
+
+      .owner {
+        color: var(--colorText2);
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 2px 15px;
+        border-radius: 5px;
+        border: 1px solid var(--colorBase);
+        transition: 0.3s ease;
+
+        &:hover {
+          transition: 0.3s ease;
+          border: 1px solid var(--colorText3);
+        }
+      }
     }
 
     .tasks {
@@ -82,16 +133,20 @@
 <div class="task-container">
   <div class="header">
     <div class="date">
-      <div class="arrow"></div>
+      <button class="arrow" style="transform: rotate(90deg);">
+        <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
+      </button>
       <div class="current-date">{date}</div>
-      <div class="arrow"></div>
+      <button class="arrow" style="transform: rotate(-90deg);">
+        <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
+      </button>
     </div>
 
-    <div class="owner">Miquel</div>
+    <button class="owner" on:click={ownerChange}>{name}</button>
   </div>
 
   <div class="tasks">
-    {#each tasks as task}
+    {#each ownerTasks as task}
       <div class="task" class:active={task.done}>
         <button class="checkbox" />
         <div class="title">{task.title}</div>
