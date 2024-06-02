@@ -5,19 +5,23 @@
 
   let now
   let weekDay
-  let hour: string
-  let min: string
-  let sec: string
+  let hour: string = ''
+  let min: string = ''
+  let sec: string = ''
+
+  const time = () => {
+    now = new Date()
+
+    weekDay = now.getDay() === 0 ? 6 : weekDay - 1
+    hour = now.getHours() < 10 ? '0' + `${now.getHours()}` : `${now.getHours()}`
+    min = now.getMinutes() < 10 ? '0' + `${now.getMinutes()}` : `${now.getMinutes()}`
+    sec = now.getSeconds() < 10 ? '0' + `${now.getSeconds()}` : `${now.getSeconds()}`
+  }
+
+  time()
 
   onMount(() => {
-    const currentTime = setInterval(() => {
-      now = new Date()
-
-      weekDay = now.getDay()
-      hour = now.getHours() < 10 ? '0' + `${now.getHours()}` : `${now.getHours()}`
-      min = now.getMinutes() < 10 ? '0' + `${now.getMinutes()}` : `${now.getMinutes()}`
-      sec = now.getSeconds() < 10 ? '0' + `${now.getSeconds()}` : `${now.getSeconds()}`
-    }, 1000)
+    setInterval(time, 1000)
   })
 </script>
 
