@@ -13,7 +13,7 @@ const Entertainment = defineTable({
   columns: {
     name: column.text(),
     img: column.text(),
-    title: column.text(),
+    title: column.text({ unique: true }),
     desc: column.text(),
     duration: column.text(),
     link: column.text(),

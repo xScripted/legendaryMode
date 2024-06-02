@@ -13,19 +13,24 @@
   let onMounted: boolean = false
 
   $: if (HTMLslides) HTMLslides.style.transform = `translateX(${itemWidth * index}px)`
-  $: disablePrev = index >= 0
-  $: disableNext = onMounted && -itemWidth < window.innerWidth - HTMLslides.getBoundingClientRect().right
+
+  const disableBtns = () => {
+    setTimeout(() => {
+      disableNext = window.innerWidth > HTMLslides.getBoundingClientRect().right
+      console.log(window.innerWidth, HTMLslides.getBoundingClientRect().right)
+    }, 300)
+
+    disablePrev = index === 0
+  }
 
   const previous = () => {
-    if (index < 0) {
-      index++
-      disableNext = false
-    }
+    if (index < 0) index++
+    disableBtns()
   }
 
   const next = () => {
-    const sizes = HTMLslides.getBoundingClientRect()
-    if (0 > window.innerWidth - sizes.right) index--
+    if (0 > window.innerWidth - HTMLslides.getBoundingClientRect().right) index--
+    disableBtns()
   }
 
   onMount(() => {
