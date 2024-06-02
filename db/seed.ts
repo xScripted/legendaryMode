@@ -1,11 +1,11 @@
 import { db, Entertainment, Tasks } from 'astro:db'
 
 const taskData = [
-  { name: 'Laia', title: 'Buy Groceries', done: 'No', date: '2024-06-02' },
-  { name: 'Miquel', title: 'Complete Project', done: 'Yes', date: '2024-06-01' },
-  { name: 'Laia', title: 'Gym Workout', done: 'Yes', date: '2024-06-02' },
-  { name: 'Miquel', title: 'Read Book', done: 'No', date: '2024-06-03' },
-  { name: 'Laia', title: 'Prepare Presentation', done: 'No', date: '2024-06-04' },
+  { name: 'Laia', title: 'Buy Groceries', done: false, date: '2024-06-02' },
+  { name: 'Miquel', title: 'Complete Project', done: true, date: '2024-06-01' },
+  { name: 'Laia', title: 'Gym Workout', done: true, date: '2024-06-02' },
+  { name: 'Miquel', title: 'Read Book', done: false, date: '2024-06-03' },
+  { name: 'Laia', title: 'Prepare Presentation', done: false, date: '2024-06-04' },
 ]
 
 const entertainmentData = [

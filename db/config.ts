@@ -4,7 +4,7 @@ const Tasks = defineTable({
   columns: {
     name: column.text(),
     title: column.text(),
-    done: column.text(),
+    done: column.boolean(),
     date: column.text(),
   },
 })

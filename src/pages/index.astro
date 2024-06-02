@@ -1,12 +1,15 @@
 ---
 import Clock from '@/components/Clock.svelte'
+import ToDo from '@/components/ToDo.svelte'
 import SliderX from '@/components/SliderX.svelte'
 import Card from '@/components/Card.svelte'
 import Layout from '@/layouts/Layout.astro'
 
 const response = await fetch(import.meta.env.PUBLIC_URL + '/api/entertainment')
+const responseTasks = await fetch(import.meta.env.PUBLIC_URL + '/api/tasks')
 
 const entertainments = await response.json()
+const tasks = await responseTasks.json()
 ---
 
 <style lang="scss"></style>
@@ -14,7 +17,9 @@ const entertainments = await response.json()
 <Layout title="Legendary Mode">
   <Clock client:load />
 
-  <p>
+  <ToDo {tasks} client:load />
+
+  <!--<p>
     1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
     visualizados (uno para laia y uno para miquel)
   </p>
@@ -32,5 +37,5 @@ const entertainments = await response.json()
         />
       ))
     }
-  </SliderX>
+  </SliderX>-->
 </Layout>
