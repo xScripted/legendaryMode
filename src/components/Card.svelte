@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Svg from '@/components/essentials/Svg.svelte'
+  import Svg from '@/components/Svg.svelte'
 
   export let title: string = ''
   export let description: string = ''

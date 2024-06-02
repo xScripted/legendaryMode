@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import Svg from '@/components/essentials/Svg.svelte'
+  import Svg from '@/components/Svg.svelte'
 
   export let itemWidth: number = 600
 
