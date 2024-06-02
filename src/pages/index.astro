@@ -3,6 +3,10 @@ import Clock from '@/components/Clock.svelte'
 import SliderX from '@/components/SliderX.svelte'
 import Card from '@/components/Card.svelte'
 import Layout from '@/layouts/Layout.astro'
+
+const response = await fetch(import.meta.env.PUBLIC_URL + '/api/entertainment')
+
+const entertainments = await response.json()
 ---
 
 <style lang="scss"></style>
@@ -10,49 +14,23 @@ import Layout from '@/layouts/Layout.astro'
 <Layout title="Legendary Mode">
   <Clock client:load />
 
-  <!-- <p>
+  <p>
     1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
     visualizados (uno para laia y uno para miquel)
   </p>
 
   <p>To do list semanal, To do list diario, Uno para miquel y otro para Laia</p>
 
-  <SliderX itemWidth={700}>
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-    <Card
-      title="Example title"
-      description="Example description"
-      image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
-      href="https://www.youtube.com/@TheWildProject"
-    />
-  </SliderX>-->
+  <SliderX gap="30" client:load>
+    {
+      entertainments.map((item) => (
+        <Card
+          title={item.title}
+          description={item.desc}
+          image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
+          href="https://www.youtube.com/@TheWildProject"
+        />
+      ))
+    }
+  </SliderX>
 </Layout>

@@ -11,7 +11,7 @@
 </script>
 
 <style lang="scss">
-  @import '../../../sass/mixins.scss';
+  @import '../sass/mixins.scss';
 
   .card {
     border: 1px solid var(--colorBorder);
