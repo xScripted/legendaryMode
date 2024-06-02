@@ -8,18 +8,36 @@
   export let href: string = ''
   export let horizontal: boolean = false
   export let reverse: boolean = false
+  export let laia: boolean = false
+  export let miquel: boolean = false
+
+  const update = async (person: string) => {
+    const response = await fetch(`${import.meta.env.PUBLIC_URL}/api/entertainment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ person, title }),
+    })
+
+    const newValue = await response.json()
+
+    person === 'laia' ? (laia = newValue) : (miquel = newValue)
+  }
 </script>
 
 <style lang="scss">
   @import '../sass/mixins.scss';
 
   .card {
+    position: relative;
     border: 1px solid var(--colorBorder);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     border-radius: var(--radius);
     width: 100%;
+    padding-bottom: 50px;
 
     &.reverse {
       flex-direction: column-reverse;
@@ -62,12 +80,22 @@
         color: var(--colorText2);
       }
     }
+
+    .eyes {
+      display: flex;
+      gap: 10px;
+      position: absolute;
+      right: 15px;
+      bottom: 0px;
+    }
   }
 </style>
 
-<svelte:element this={href ? 'a' : 'div'} href={href ? href : null} title={href ? title : null} class="card" class:horizontal class:reverse>
+<div title={href ? title : null} class="card" class:horizontal class:reverse>
   {#if image}
-    <img src={image} alt="card-image" loading="lazy" />
+    <a {href}>
+      <img src={image} alt="card-image" loading="lazy" />
+    </a>
   {/if}
 
   <div class="content">
@@ -84,6 +112,14 @@
       </div>
     {/if}
 
+    <div class="eyes">
+      <button on:click={() => update('laia')}>
+        <Svg name="eye" width="40" height="40" fill={laia ? 'purple' : 'gray'} />
+      </button>
+      <button on:click={() => update('laia')}>
+        <Svg name="eye" width="40" height="40" fill={miquel ? 'green' : 'gray'} />
+      </button>
+    </div>
     <slot />
   </div>
-</svelte:element>
+</div>

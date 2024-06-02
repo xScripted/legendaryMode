@@ -19,7 +19,7 @@ const tasks = await responseTasks.json()
 
   <ToDo {tasks} client:load />
 
-  <!--<p>
+  <p>
     1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
     visualizados (uno para laia y uno para miquel)
   </p>
@@ -34,8 +34,11 @@ const tasks = await responseTasks.json()
           description={item.desc}
           image="https://i.ytimg.com/vi/0r3XtsYmNzI/maxresdefault.jpg"
           href="https://www.youtube.com/@TheWildProject"
+          laia={item.laia}
+          miquel={item.miquel}
+          client:visible
         />
       ))
     }
-  </SliderX>-->
+  </SliderX>
 </Layout>
