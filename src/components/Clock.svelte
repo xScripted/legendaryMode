@@ -26,15 +26,18 @@
 </script>
 
 <style lang="scss">
+  @import '../sass/mixins.scss';
   .clock {
     background-color: var(--colorBase);
     border-radius: var(--radius);
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     padding: 20px 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
     .week {
       width: 100%;
       display: flex;
@@ -74,6 +77,16 @@
       .mid {
         font-size: 50px;
         color: var(--colorText3);
+      }
+
+      @include notDesktop {
+        .hour {
+          font-size: 50px;
+        }
+
+        .mid {
+          font-size: 35px;
+        }
       }
     }
   }

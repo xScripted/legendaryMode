@@ -31,13 +31,14 @@
 
   .card {
     position: relative;
-    border: 1px solid var(--colorBorder);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     border-radius: var(--radius);
     width: 100%;
     padding-bottom: 50px;
+    background-color: var(--colorBase);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
 
     &.reverse {
       flex-direction: column-reverse;
@@ -114,10 +115,10 @@
 
     <div class="eyes">
       <button on:click={() => update('laia')}>
-        <Svg name="eye" width="40" height="40" fill={laia ? 'purple' : 'gray'} />
+        <Svg name="eye" width="30" height="30" fill={laia ? 'purple' : 'gray'} />
       </button>
-      <button on:click={() => update('laia')}>
-        <Svg name="eye" width="40" height="40" fill={miquel ? 'green' : 'gray'} />
+      <button on:click={() => update('miquel')}>
+        <Svg name="eye" width="30" height="30" fill={miquel ? 'green' : 'gray'} />
       </button>
     </div>
     <slot />

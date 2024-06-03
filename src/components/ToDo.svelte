@@ -33,12 +33,27 @@
 
     ownerTasks = owner
   }
+
+  const addDays = (date, days) => {
+    var result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
+  }
+
+  const dateChange = (direction: 'future' | 'past') => {
+    console.log(tasks)
+
+    // 1 - Convertir date a un objeto date: new Date(date)
+    // Add / remove day using addDays (He buscado en google: sum day to date javascript y he llegado hasta aqui: https://stackoverflow.com/questions/563406/how-to-add-days-to-date)
+  }
+
+  // Mostrar solo las tareas de este dia en concreto (parecido a lo del owner)
 </script>
 
 <style lang="scss">
   .task-container {
     height: fit-content;
-    width: fit-content;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
@@ -48,6 +63,8 @@
     background-color: var(--colorBase);
     border-radius: var(--radius);
     padding: 20px 25px;
+
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
 
     .header {
       width: 100%;
@@ -133,11 +150,11 @@
 <div class="task-container">
   <div class="header">
     <div class="date">
-      <button class="arrow" style="transform: rotate(90deg);">
+      <button on:click={() => dateChange('past')} class="arrow" style="transform: rotate(90deg);">
         <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
       </button>
       <div class="current-date">{date}</div>
-      <button class="arrow" style="transform: rotate(-90deg);">
+      <button on:click={() => dateChange('future')} class="arrow" style="transform: rotate(-90deg);">
         <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
       </button>
     </div>
