@@ -12,7 +12,7 @@
   const time = () => {
     now = new Date()
 
-    weekDay = now.getDay() === 0 ? 6 : weekDay - 1
+    weekDay = now.getDay() === 0 ? 6 : now.getDay() - 1
     hour = now.getHours() < 10 ? '0' + `${now.getHours()}` : `${now.getHours()}`
     min = now.getMinutes() < 10 ? '0' + `${now.getMinutes()}` : `${now.getMinutes()}`
     sec = now.getSeconds() < 10 ? '0' + `${now.getSeconds()}` : `${now.getSeconds()}`
