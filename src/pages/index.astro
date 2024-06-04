@@ -12,20 +12,36 @@ const entertainments = await response.json()
 const tasks = await responseTasks.json()
 ---
 
-<style lang="scss"></style>
+<style lang="scss">
+  @import '../sass/mixins.scss';
+  .legendary-mode {
+    padding-top: 50px;
+    display: flex;
+    gap: 30px;
+
+    @include notDesktop {
+      flex-direction: column-reverse;
+    }
+  }
+
+  h2 {
+    padding-top: 70px;
+    font-size: 70px;
+
+    @include notDesktop {
+      font-size: 30px;
+    }
+  }
+</style>
 
 <Layout title="Legendary Mode">
-  <Clock client:load />
+  <h2 class="g-wrapper">Legendary Mode</h2>
+  <div class="legendary-mode g-wrapper">
+    <ToDo {tasks} client:load />
+    <Clock client:load />
+  </div>
 
-  <ToDo {tasks} client:load />
-
-  <p>
-    1 - Lista detallada de peliculas, series, canales de youtube de entretenimiento positivo, tendran una checkbox para saber si han sido
-    visualizados (uno para laia y uno para miquel)
-  </p>
-
-  <p>To do list semanal, To do list diario, Uno para miquel y otro para Laia</p>
-
+  <h2 class="g-wrapper">Positive Inputs</h2>
   <SliderX gap="30" client:load>
     {
       entertainments.map((item) => (

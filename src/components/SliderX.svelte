@@ -17,7 +17,6 @@
   const disableBtns = () => {
     setTimeout(() => {
       disableNext = window.innerWidth > HTMLslides.getBoundingClientRect().right
-      console.log(window.innerWidth, HTMLslides.getBoundingClientRect().right)
     }, 300)
 
     disablePrev = index === 0
@@ -122,9 +121,10 @@
         justify-content: center;
         align-items: center;
 
-        border: 1px solid var(--colorBrand);
-        border-radius: 100%;
+        border-radius: 10px;
         transition: 0.3s ease;
+        background-color: var(--colorBase);
+        box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
 
         :global(svg) {
           transform: translateX(1px);

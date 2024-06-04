@@ -1,6 +1,8 @@
 <script lang="ts">
   import Svg from '@/components/Svg.svelte'
+
   export let tasks
+  export let done: boolean = false
 
   const months: string[] = [
     'January',
@@ -33,6 +35,36 @@
 
     ownerTasks = owner
   }
+
+  const addDays = (date, days) => {
+    var result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
+  }
+
+  const dateChange = (direction: 'future' | 'past') => {
+    console.log(tasks)
+
+    // 1 - Convertir date a un objeto date: new Date(date)
+    // Add / remove day using addDays (He buscado en google: sum day to date javascript y he llegado hasta aqui: https://stackoverflow.com/questions/563406/how-to-add-days-to-date)
+  }
+
+  // Mostrar solo las tareas de este dia en concreto (parecido a lo del owner)
+
+  const update = async (isDone: boolean) => {
+    const response = await fetch(`${import.meta.env.PUBLIC_URL}/api/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({ isDone }),
+    })
+
+    const newValue = await response.json()
+
+    isDone = newValue
+  }
 </script>
 
 <style lang="scss">
@@ -49,6 +81,8 @@
     border-radius: var(--radius);
     padding: 20px 25px;
 
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
+
     .header {
       width: 100%;
       display: flex;
@@ -62,10 +96,10 @@
         align-items: center;
 
         .arrow {
-          height: 30px;
-          width: 30px;
+          height: 25px;
+          width: 25px;
           border: 1px solid var(--colorBase);
-          border-radius: 100%;
+          border-radius: 5px;
 
           display: flex;
           align-items: center;
@@ -133,11 +167,11 @@
 <div class="task-container">
   <div class="header">
     <div class="date">
-      <button class="arrow" style="transform: rotate(90deg);">
+      <button on:click={() => dateChange('past')} class="arrow" style="transform: rotate(90deg);">
         <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
       </button>
       <div class="current-date">{date}</div>
-      <button class="arrow" style="transform: rotate(-90deg);">
+      <button on:click={() => dateChange('future')} class="arrow" style="transform: rotate(-90deg);">
         <Svg name="arrow" fill="var(--colorText2)" height="20" width="20" />
       </button>
     </div>
@@ -148,7 +182,7 @@
   <div class="tasks">
     {#each ownerTasks as task}
       <div class="task" class:active={task.done}>
-        <button class="checkbox" />
+        <button class="checkbox" on:click={() => update(!task.done)} />
         <div class="title">{task.title}</div>
       </div>
     {/each}
