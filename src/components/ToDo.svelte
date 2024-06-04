@@ -1,6 +1,8 @@
 <script lang="ts">
   import Svg from '@/components/Svg.svelte'
+
   export let tasks
+  export let done: boolean = false
 
   const months: string[] = [
     'January',
@@ -48,12 +50,27 @@
   }
 
   // Mostrar solo las tareas de este dia en concreto (parecido a lo del owner)
+
+  const update = async (isDone: boolean) => {
+    const response = await fetch(`${import.meta.env.PUBLIC_URL}/api/tasks`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify({ isDone }),
+    })
+
+    const newValue = await response.json()
+
+    isDone = newValue
+  }
 </script>
 
 <style lang="scss">
   .task-container {
     height: fit-content;
-    width: 100%;
+    width: fit-content;
 
     display: flex;
     flex-direction: column;
@@ -79,10 +96,10 @@
         align-items: center;
 
         .arrow {
-          height: 30px;
-          width: 30px;
+          height: 25px;
+          width: 25px;
           border: 1px solid var(--colorBase);
-          border-radius: 100%;
+          border-radius: 5px;
 
           display: flex;
           align-items: center;
@@ -165,7 +182,7 @@
   <div class="tasks">
     {#each ownerTasks as task}
       <div class="task" class:active={task.done}>
-        <button class="checkbox" />
+        <button class="checkbox" on:click={() => update(!task.done)} />
         <div class="title">{task.title}</div>
       </div>
     {/each}
