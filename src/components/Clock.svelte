@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import Svg from './Svg.svelte'
 
   const days: string[] = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
@@ -9,7 +10,7 @@
   let min: string = ''
   let sec: string = ''
 
-  const time = () => {
+  const setTime = () => {
     now = new Date()
 
     weekDay = now.getDay() === 0 ? 6 : now.getDay() - 1
@@ -18,15 +19,50 @@
     sec = now.getSeconds() < 10 ? '0' + `${now.getSeconds()}` : `${now.getSeconds()}`
   }
 
-  time()
+  setTime()
+
+  let mode: string = 'clock'
+  let intervalID
+
+  const changeTimer = () => {
+    mode = mode === 'timer' ? 'clock' : 'timer'
+
+    hour = '00'
+    min = '00'
+    sec = '00'
+
+    clearInterval(intervalID)
+
+    if (mode === 'clock') {
+      setTime()
+      intervalID = setInterval(setTime, 1000)
+    }
+  }
+
+  const changePomodoro = () => {
+    mode = mode === 'pomodoro' ? 'clock' : 'pomodoro'
+
+    if (mode === 'clock') {
+      intervalID = setInterval(setTime, 1000)
+    }
+  }
+
+  const changeCountdown = () => {
+    mode = mode === 'countdown' ? 'clock' : 'countdown'
+
+    if (mode === 'clock') {
+      intervalID = setInterval(setTime, 1000)
+    }
+  }
 
   onMount(() => {
-    setInterval(time, 1000)
+    intervalID = setInterval(setTime, 1000)
   })
 </script>
 
 <style lang="scss">
   @import '../sass/mixins.scss';
+
   .clock {
     background-color: var(--colorBase);
     border-radius: var(--radius);
@@ -38,10 +74,16 @@
     align-items: center;
 
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.2);
+
     .week {
       width: 100%;
       display: flex;
       justify-content: space-around;
+      opacity: 0;
+
+      &.active {
+        opacity: 1;
+      }
 
       .day {
         color: var(--colorText3);
@@ -89,12 +131,53 @@
         }
       }
     }
+
+    .utilities {
+      margin-top: 25px;
+
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+
+      .function {
+        border: 1px solid var(--colorText3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        border-radius: 100%;
+
+        &:hover {
+          border: 1px solid white;
+
+          :global(svg) {
+            fill: var(--colorText);
+            stroke: var(--colorText);
+          }
+        }
+
+        :global(svg) {
+          fill: var(--colorText3);
+          stroke: var(--colorText3);
+        }
+
+        &.selected {
+          border: 1px solid white;
+
+          :global(svg) {
+            fill: var(--colorText);
+            stroke: var(--colorText);
+          }
+        }
+      }
+    }
   }
 </style>
 
 <div class="clock-container">
   <div class="clock">
-    <div class="week">
+    <div class="week" class:active={mode === 'clock'}>
       {#each days as day, i}
         <div class="day" class:active={weekDay === i}>{day}</div>
       {/each}
@@ -106,7 +189,17 @@
       <div class="mid">:</div>
       <div class="hour">{sec}<span class="title">SECONDS</span></div>
     </div>
-  </div>
 
-  <div class="utilities"></div>
+    <div class="utilities">
+      <button class="function" class:selected={mode === 'timer'} on:click={changeTimer}>
+        <Svg name="timer" width="20" height="20" />
+      </button>
+      <button class="function" class:selected={mode === 'pomodoro'} on:click={changePomodoro}>
+        <Svg name="pomodoro" width="20" height="20" />
+      </button>
+      <button class="function" class:selected={mode === 'countdown'} on:click={changeCountdown}>
+        <Svg name="hourglass" width="20" height="20" />
+      </button>
+    </div>
+  </div>
 </div>

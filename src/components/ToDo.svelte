@@ -51,19 +51,21 @@
 
   // Mostrar solo las tareas de este dia en concreto (parecido a lo del owner)
 
-  const update = async (isDone: boolean) => {
+  const update = async (id: number) => {
     const response = await fetch(`${import.meta.env.PUBLIC_URL}/api/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
 
-      body: JSON.stringify({ isDone }),
+      body: JSON.stringify(id),
     })
 
     const newValue = await response.json()
 
-    isDone = newValue
+    console.log(newValue)
+
+    tasks[id].done = newValue
   }
 </script>
 
@@ -182,7 +184,7 @@
   <div class="tasks">
     {#each ownerTasks as task}
       <div class="task" class:active={task.done}>
-        <button class="checkbox" on:click={() => update(!task.done)} />
+        <button class="checkbox" on:click={() => update(task._id)} />
         <div class="title">{task.title}</div>
       </div>
     {/each}
