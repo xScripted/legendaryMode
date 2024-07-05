@@ -23,6 +23,7 @@
 
   let mode: string = 'clock'
   let intervalID
+  let play: boolean = false
 
   const changeTimer = () => {
     mode = mode === 'timer' ? 'clock' : 'timer'
@@ -37,6 +38,12 @@
       setTime()
       intervalID = setInterval(setTime, 1000)
     }
+  }
+
+  const hola = () => {
+    sec = sec < '10' ? '0' + `${Number(sec) + 1}` : '00'
+    min = `${Number(min) + 1}`
+    hour = `${Number(hour) + 1}`
   }
 
   const changePomodoro = () => {
@@ -57,6 +64,7 @@
 
   onMount(() => {
     intervalID = setInterval(setTime, 1000)
+    setInterval(hola, 1000)
   })
 </script>
 
@@ -64,6 +72,7 @@
   @import '../sass/mixins.scss';
 
   .clock {
+    position: relative;
     background-color: var(--colorBase);
     border-radius: var(--radius);
     width: 100%;
@@ -172,6 +181,31 @@
         }
       }
     }
+
+    .actions {
+      position: absolute;
+      display: none;
+      gap: 10px;
+
+      bottom: 20px;
+      right: 25px;
+
+      &.showed {
+        display: flex;
+      }
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+          :global(svg) {
+            fill: var(--colorText);
+          }
+        }
+      }
+    }
   }
 </style>
 
@@ -199,6 +233,19 @@
       </button>
       <button class="function" class:selected={mode === 'countdown'} on:click={changeCountdown}>
         <Svg name="hourglass" width="20" height="20" />
+      </button>
+    </div>
+
+    <div class="actions" class:showed={mode != 'clock'}>
+      <button on:click={() => (play = !play)}>
+        {#if !play}
+          <Svg name="play" width="13" height="13" fill="var(--colorText3)" />
+        {:else}
+          <Svg name="pause" width="13" height="13" fill="var(--colorText3)" />
+        {/if}
+      </button>
+      <button>
+        <Svg name="reset" width="15" height="15" fill="var(--colorText3)" />
       </button>
     </div>
   </div>
