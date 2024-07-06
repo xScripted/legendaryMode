@@ -4,30 +4,67 @@
 
   const days: string[] = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
 
+  let mode: string = 'clock'
+
   let now
   let weekDay
   let hour: string = ''
   let min: string = ''
   let sec: string = ''
 
+  const formatTime = (value: number): string => {
+    if (value > 59) value = 0
+
+    return value < 10 ? '0' + `${value}` : `${value}`
+  }
+
+  const intervalConfig = (newMode: string = 'clock') => {
+    if (mode === newMode) {
+      setTime()
+
+      mode = 'clock'
+      return
+    }
+
+    if (newMode === 'timer') timer()
+    if (newMode === 'pomodoro') pomodoro()
+    if (newMode === 'countdown') countdown()
+
+    mode = newMode
+  }
+
   const setTime = () => {
     now = new Date()
 
     weekDay = now.getDay() === 0 ? 6 : now.getDay() - 1
-    hour = now.getHours() < 10 ? '0' + `${now.getHours()}` : `${now.getHours()}`
-    min = now.getMinutes() < 10 ? '0' + `${now.getMinutes()}` : `${now.getMinutes()}`
-    sec = now.getSeconds() < 10 ? '0' + `${now.getSeconds()}` : `${now.getSeconds()}`
+    hour = formatTime(now.getHours())
+    min = formatTime(now.getMinutes())
+    sec = formatTime(now.getSeconds())
   }
 
   setTime()
 
-  let mode: string = 'clock'
   let intervalID
   let play: boolean = false
+  let timerInterval
 
-  const changeTimer = () => {
-    mode = mode === 'timer' ? 'clock' : 'timer'
+  const hola = () => {
+    play = !play
 
+    if (play === true) {
+      timerInterval = setInterval(() => {
+        if (min === '59' && sec === '59') hour = formatTime(Number(hour) + 1)
+        if (sec === '59') min = formatTime(Number(min) + 1)
+        sec = formatTime(Number(sec) + 1)
+      }, 1000)
+
+      return
+    }
+
+    clearInterval(timerInterval)
+  }
+
+  const timer = () => {
     hour = '00'
     min = '00'
     sec = '00'
@@ -40,13 +77,7 @@
     }
   }
 
-  const hola = () => {
-    sec = sec < '10' ? '0' + `${Number(sec) + 1}` : '00'
-    min = `${Number(min) + 1}`
-    hour = `${Number(hour) + 1}`
-  }
-
-  const changePomodoro = () => {
+  const pomodoro = () => {
     mode = mode === 'pomodoro' ? 'clock' : 'pomodoro'
 
     if (mode === 'clock') {
@@ -54,7 +85,7 @@
     }
   }
 
-  const changeCountdown = () => {
+  const countdown = () => {
     mode = mode === 'countdown' ? 'clock' : 'countdown'
 
     if (mode === 'clock') {
@@ -63,8 +94,7 @@
   }
 
   onMount(() => {
-    intervalID = setInterval(setTime, 1000)
-    setInterval(hola, 1000)
+    intervalID = setInterval(intervalConfig, 1000)
   })
 </script>
 
@@ -225,26 +255,26 @@
     </div>
 
     <div class="utilities">
-      <button class="function" class:selected={mode === 'timer'} on:click={changeTimer}>
+      <button class="function" class:selected={mode === 'timer'} on:click={() => intervalConfig('timer')}>
         <Svg name="timer" width="20" height="20" />
       </button>
-      <button class="function" class:selected={mode === 'pomodoro'} on:click={changePomodoro}>
+      <button class="function" class:selected={mode === 'pomodoro'} on:click={() => intervalConfig('pomodoro')}>
         <Svg name="pomodoro" width="20" height="20" />
       </button>
-      <button class="function" class:selected={mode === 'countdown'} on:click={changeCountdown}>
+      <button class="function" class:selected={mode === 'countdown'} on:click={() => intervalConfig('countdown')}>
         <Svg name="hourglass" width="20" height="20" />
       </button>
     </div>
 
     <div class="actions" class:showed={mode != 'clock'}>
-      <button on:click={() => (play = !play)}>
+      <button on:click={hola}>
         {#if !play}
           <Svg name="play" width="13" height="13" fill="var(--colorText3)" />
         {:else}
           <Svg name="pause" width="13" height="13" fill="var(--colorText3)" />
         {/if}
       </button>
-      <button>
+      <button on:click={timer}>
         <Svg name="reset" width="15" height="15" fill="var(--colorText3)" />
       </button>
     </div>
