@@ -23,6 +23,7 @@
       setTime()
 
       mode = 'clock'
+      intervalID = setInterval(setTime, 1000)
       return
     }
 
@@ -70,11 +71,6 @@
     sec = '00'
 
     clearInterval(intervalID)
-
-    if (mode === 'clock') {
-      setTime()
-      intervalID = setInterval(setTime, 1000)
-    }
   }
 
   const pomodoro = () => {
